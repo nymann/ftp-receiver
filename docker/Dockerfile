@@ -7,3 +7,4 @@ RUN make install
 FROM nymann/debian-python3:$DEBIAN_VERSION AS production-image
 USER $USERNAME
 COPY --from=compile-image --chown=$USERNAME:$USERNAME "$VENV" "$VENV"
+CMD ftp_receiver

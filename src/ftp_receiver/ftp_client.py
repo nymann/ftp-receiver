@@ -13,7 +13,7 @@ class FTPClient:
             user=ftp_config.username,
             passwd=ftp_config.password,
         )
-        self.output_dir = config.download.output_dir
+        self.output_dir = config.download.directory
 
     def list(self) -> list[str]:
         return self.ftp.nlst()
@@ -23,3 +23,7 @@ class FTPClient:
         output_file = self.output_dir.joinpath(filename)
         with open(file=output_file, mode="wb") as fp:
             self.ftp.retrbinary(cmd=f"RETR {filename}", callback=fp.write)
+
+    def quit(self) -> None:
+        self.ftp.quit()
+        self.logger.info("Quit")

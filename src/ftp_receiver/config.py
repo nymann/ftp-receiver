@@ -12,7 +12,11 @@ class BaseConfig(BaseSettings):
 
 
 class DownloadConfig(BaseConfig):
-    output_dir: Path
+    directory: Path
+    interval_seconds: int = 300
+
+    class Config:
+        env_prefix = "download_"
 
 
 class KafkaConfig(BaseConfig):
@@ -21,6 +25,13 @@ class KafkaConfig(BaseConfig):
 
     class Config:
         env_prefix = "kafka_"
+
+
+class LogConfig(BaseConfig):
+    level: str = "INFO"
+
+    class Config:
+        env_prefix = "log_"
 
 
 class FTPConfig(BaseConfig):
@@ -39,3 +50,4 @@ class Config:
         self.ftp = FTPConfig()
         self.kafka = KafkaConfig()
         self.download = DownloadConfig()
+        self.log = LogConfig()
