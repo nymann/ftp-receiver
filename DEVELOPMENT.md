@@ -1,4 +1,15 @@
-### Cross platform development
+# Development
+
+```sh
+cp example.env .env
+# Edit .env to your satisfaction
+make install-all
+docker-compose up -d # start Kafka
+ftp_receiver # run ftp receiver.
+# Go to http://localhost:8080/ui/clusters/local/topics to inspect the Kafka UI
+```
+
+## Cross platform
 
 By installing `make` you can do the following:
 
