@@ -1,4 +1,4 @@
-DOCKER_REPO?=ftp-receiver
+DOCKER_REPO?=registry.nymann.dev/nymann/ftp-receiver
 DOCKER_TAG?=${DOCKER_REPO}:$(shell git describe --tag --always | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
 
 package: ${VERSION} setup.py
@@ -9,9 +9,9 @@ docker-build: ${VERSION}
 
 docker-push: ${VERSION}
 	@docker build \
-        --cache-from ${DOCKER_REPO}:latest \
-	    -t ${DOCKER_REPO}:latest \
-	    -t ${DOCKER_TAG} \
+		--cache-from ${DOCKER_REPO}:latest \
+		-t ${DOCKER_REPO}:latest \
+		-t ${DOCKER_TAG} \
 		-f docker/Dockerfile .
 	@docker push --all-tags ${DOCKER_REPO}
 

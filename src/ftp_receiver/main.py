@@ -11,17 +11,17 @@ from ftp_receiver.publisher import KafkaPublisher
 def main() -> None:
     config = Config()
     logging.basicConfig(stream=sys.stdout, level=config.log.level)
+    publisher = KafkaPublisher(config=config)
     interval = config.download.interval_seconds
     while True:  # noqa: WPS457 infinite-while-loop
         logging.info(f"Running FTP Receiver v{config.version}")
-        run(config=config)
+        run(config=config, publisher=publisher)
         logging.info(f"Run completed, sleeping for {interval} seconds")
         time.sleep(interval)
 
 
-def run(config: Config) -> None:
+def run(config: Config, publisher: KafkaPublisher) -> None:
     client = FTPClient(config=config)
-    publisher = KafkaPublisher(config=config)
     downloaded = filenames(output=config.download.directory)
     for filename in sorted(client.list()):
         if filename in downloaded:
