@@ -14,6 +14,7 @@ class BaseConfig(BaseSettings):
 class DownloadConfig(BaseConfig):
     directory: Path
     interval_seconds: int = 300
+    match_pattern: str = ""
 
     class Config:
         env_prefix = "download_"

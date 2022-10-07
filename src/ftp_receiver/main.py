@@ -1,5 +1,6 @@
 import logging
 from pathlib import Path
+import re
 import sys
 import time
 
@@ -26,8 +27,9 @@ def run(config: Config, publisher: KafkaPublisher) -> None:
     for filename in sorted(client.list()):
         if filename in downloaded:
             continue
-        client.download(filename=filename)
-        publisher.publish(filename=filename)
+        if re.match(config.download.match_pattern, filename):
+            client.download(filename=filename)
+            publisher.publish(filename=filename)
     client.quit()
 
 
